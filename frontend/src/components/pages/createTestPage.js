@@ -1,10 +1,12 @@
 import React, { useState }from 'react'
-import {Button, Grid, MenuItem, Select, TextField} from '@mui/material';
+import {Button, Grid, MenuItem, Radio, Select, TextField} from '@mui/material';
 import { primaryTextField } from '../ui/cssStyles';
+import Add from '@mui/icons-material/Add';
 
 const CreateTestPage = () => {
 
     const [type, setType] = useState('')
+    const [questions, setQuestions] = useState([])
 
     const onChangeType = (e) => {
         const value = e.target.value
@@ -54,7 +56,25 @@ const CreateTestPage = () => {
                     <div className='createTest_list_question_main'>
                         {
                             type == 'solo' &&
-                            <div>SOLO</div>
+                            <div className='question'>
+                                <div className='question_answer'>
+                                    <Radio />
+                                    <TextField 
+                                        label="Название теста"
+                                        className='createTest_main_input'
+                                        sx={{
+                                            ...primaryTextField,
+                                            minWidth: '350px'
+                                        }}
+                                    />
+                                </div>
+                                <Button 
+                                    color='primary'
+                                    variant="contained"
+                                >
+                                    <Add />
+                                </Button>
+                            </div>
                         }
                         {
                             type == 'many' &&
