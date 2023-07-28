@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900;1000&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.header {
+    max-width: 1440px;
+    margin: 15px auto;
+    padding: 0px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_user {
+    display: flex;
+    align-items: center;
+}
+
+.mainPage {
+
+    max-width: 1440px;
+    margin: 0px auto;
+
+}
+
+.mainPage_name{
+    font-size: 18px;
+}
+
+.mainPage_lk {
+    margin: 15px 0;
+    height: 500px;
+    display: flex;
+    border-radius: 12px;
+}
+
+.mainPage_lk_item {
+}
+
+.mainPage_lk_item_button {
+    border-radius: 12px !important;
+    padding: 10px 30px !important;
+}
+
+.mainPage_lk_item + .mainPage_lk_item {
+    margin-left: 10px;
+}
+
+.login{
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+    padding: 50px 60px !important;
+    border-radius: 12px;
+    border: 2px solid #6FB6FF;
+}
+
+.login_title{
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.createTest {
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    margin: 15px auto;
+}
+
+.createTest_main {
+    margin-top: 12px;
+    border: 1px solid rgba(0, 108, 196, 0.1);
+    box-shadow: -1px -1px 18px -3px rgba(8, 119, 206, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.createTest_main_input + .createTest_main_input {
+    margin-top: 10px;
+}
+
+.createTest_list {
+    display: flex;
+
+}
+
+.createTest_list_question {
+    border: 1px solid red;
+    width: 100%;
+    padding: 15px;
+}
+
+.createTest_list_question_main {
+
+}
