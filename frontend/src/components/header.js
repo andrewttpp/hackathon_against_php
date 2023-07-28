@@ -17,7 +17,7 @@ const Header = () => {
                     auth 
                     ?
                     <div className='header_user'>
-                        <span>Студент</span>
+                        <span>Преподаватель</span>
                         <Avatar color="primary" variant="outlined" sx={{ marginLeft: '8px' }}>AN</Avatar>
                     </div>
                     :
