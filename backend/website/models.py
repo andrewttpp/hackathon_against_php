@@ -1,26 +1,76 @@
-from django.contrib.auth import BaseUserManager
-from django.contrib.auth import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 class Groups(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Название группы')
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
+
+
+class Levels(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name='Название уровня')
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Уровень образования'
+        verbose_name_plural = 'Уровни образования'
+
+    def __str__(self):
+        return self.name
+
 
 class Programs(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name='Название программы')
+    code = models.ForeignKey('Specialties', on_delete=models.CASCADE, verbose_name='Направление')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Название образовательной программы')
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Образовательная программа'
+        verbose_name_plural = 'Образовательные программы'
+
+    def __str__(self):
+        return self.name
 
 
 class Competencies(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Название компетенции')
 
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Компетенция'
+        verbose_name_plural = 'Компетенции'
+
+    def __str__(self):
+        return self.name
+
 
 class Disciplines(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Название дисциплины')
 
+    def __str__(self):
+        return self.name
+
 
 class Specialties(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name='Название дисциплины')
+    level = models.ForeignKey('Levels', on_delete=models.CASCADE, verbose_name='Уровень образования')
+    code = models.CharField(max_length=255, unique=True, verbose_name='Код специальности')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Название специальности')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Специальность'
+        verbose_name_plural = 'Специальности'
 
 
 class UserManager(BaseUserManager):
@@ -44,13 +94,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     email = models.EmailField(max_length=255, unique=True, verbose_name='E-mail')
     username = None
-    group = models.ForeignKey('Groups', on_delete=models.CASCADE, null=True)
+    group = models.ForeignKey('Groups', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Группа')
     first_name = None
     last_name = None
-    name = models.CharField(verbose_name='Имя', null=True)
-    surname = models.CharField(verbose_name='Фамилия', null=True)
-    patronymic = models.CharField(verbose_name='Отчество', null=True)
-    card_number = models.IntegerField(null=True)
+    name = models.CharField(verbose_name='Имя', blank=True, null=True)
+    surname = models.CharField(verbose_name='Фамилия', blank=True, null=True)
+    patronymic = models.CharField(verbose_name='Отчество', blank=True, null=True)
+    card_number = models.IntegerField(null=True, blank=True, verbose_name='Номер зачетки')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
