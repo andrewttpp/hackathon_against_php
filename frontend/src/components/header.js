@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <div className='header'>
             <Link to={'/'} style={{ textDecoration: "none", color: '#000'}}>
-                DNOMOODLE.COM
+                HAKATON.COM
             </Link>
 
             <div>
