@@ -8,7 +8,6 @@ const MainPage = () => {
 
     return (
         <Grid className='mainPage'>
-            <span className='mainPage_name'>Здравствуйте, Наталья Петровна</span>
             <div className='mainPage_lk'>
                 <div className='mainPage_lk_item'>
                     <Link to={'/createTest'}>
