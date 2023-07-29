@@ -28,7 +28,8 @@ class Levels(models.Model):
 
 
 class Programs(models.Model):
-    code = models.ForeignKey('Specialties', on_delete=models.CASCADE, verbose_name='Направление')
+    code = models.ForeignKey('Specialties', on_delete=models.CASCADE, verbose_name='Направление',
+                             related_name='programs')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название образовательной программы')
 
     class Meta:
@@ -60,7 +61,8 @@ class Disciplines(models.Model):
 
 
 class Specialties(models.Model):
-    level = models.ForeignKey('Levels', on_delete=models.CASCADE, verbose_name='Уровень образования')
+    level = models.ForeignKey('Levels', on_delete=models.CASCADE, verbose_name='Уровень образования',
+                              related_name='specialties')
     code = models.CharField(max_length=255, unique=True, verbose_name='Код специальности')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название специальности')
 

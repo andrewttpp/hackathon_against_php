@@ -7,17 +7,17 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
 
 from test_site import settings
-from website.models import User
-from website.serializers import UserSerializer
+from website.models import User, Levels
+from website.serializers import UserSerializer, LevelsSerializer
 
 
 class UserLoginView(APIView):
     def post(self, request):
         data = request.data
-        username = data['username']
+        email = data['email']
         password = data['password']
 
-        user = User.objects.filter(username=username).first()
+        user = User.objects.filter(email=email).first()
 
         if not user:
             return Response({'message': 'Account not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -49,3 +49,24 @@ class MyProfile(APIView):
             return Response(data=UserSerializer(user).data, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Authorization failed! Token is invalid!"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class HandbookBachelor(APIView):
+    def get(self, request):
+        handbook = LevelsSerializer(Levels.objects.filter(name='Бакалавр').first()).data
+
+        return Response(data=handbook, status=status.HTTP_200_OK)
+
+
+class HandbookMagistracy(APIView):
+    def get(self, request):
+        handbook = LevelsSerializer(Levels.objects.filter(name='Магистратура').first()).data
+
+        return Response(data=handbook, status=status.HTTP_200_OK)
+
+
+class HandbookSpecialty(APIView):
+    def get(self, request):
+        handbook = LevelsSerializer(Levels.objects.filter(name='Специалитет').first()).data
+
+        return Response(data=handbook, status=status.HTTP_200_OK)

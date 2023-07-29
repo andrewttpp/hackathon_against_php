@@ -8,6 +8,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('user/me/', MyProfile.as_view(), name='profile_view'),
+    path('handbook/bakalavr/', HandbookBachelor.as_view(), name='handbook_bachelor'),
+    path('handbook/magistratura/', HandbookMagistracy.as_view(), name='handbook_magistracy'),
+    path('handbook/specialitet/', HandbookSpecialty.as_view(), name='handbook_specialty'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify')
