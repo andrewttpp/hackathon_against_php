@@ -1,11 +1,16 @@
-import React, { useState }from 'react'
+import React, { useContext, useEffect, useState }from 'react'
 import {Button, RadioGroup, Grid, FormControlLabel, MenuItem, Radio, Select, TextField, IconButton } from '@mui/material';
 import { primaryTextField } from '../ui/cssStyles';
 import Add from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Context } from '../..';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTestPage = () => {
+
+    const navigate = useNavigate()
+    const {user} = useContext(Context)
 
     const [questions, setQuestions] = useState([{
         id: 0,
@@ -18,6 +23,14 @@ const CreateTestPage = () => {
             }
         ]
     }])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        if (!user.auth) {
+            navigate('/login')
+        }
+        setLoading(false)
+    }, [])
 
     const onChangeType = (questionId, e) => {
         const value = e.target.value
@@ -38,7 +51,6 @@ const CreateTestPage = () => {
         const value = e.target.value
 
         setQuestions(prevState => {
-            console.log(prevState)
             return [
                 ...prevState.map(
                     i => i.id == questionId ? {
@@ -128,6 +140,10 @@ const CreateTestPage = () => {
 
     const onChangeQuestions = () => {
 
+    }
+
+    if (loading) {
+        return <div>Загрузка...</div>
     }
     
     return (

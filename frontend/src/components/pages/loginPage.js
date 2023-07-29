@@ -1,12 +1,18 @@
 import React, { useState }from 'react'
 import {Button, Grid, TextField } from '@mui/material';
 import { primaryButton, primaryTextField } from '../ui/cssStyles';
+import { loginUser } from '../../http/apiUser';
+import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 const LoginPage = () => {
 
+    const navigate = useNavigate()
+    const cookies = new Cookies();
+
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
- 
+    const [errorMessage, setErrorMessage] = useState('')
 
     const onChangeLogin = (e) => {
         const value = e.target.value
@@ -18,13 +24,30 @@ const LoginPage = () => {
         setPassword(value)
     }
     
-    const loginning = () => {
-        console.log(login, password)
+    const loginning = async () => {
+        if (!login) {
+            setErrorMessage('Введите логин')
+            return
+        }
+        if (!password) {
+            setErrorMessage('Введите пароль')
+            return
+        }
+        await loginUser(login, password)
+        .then(data => {
+            cookies.set('token', data.data.access, { path: '/' });
+            navigate('/')
+            window.location.reload()
+        })
+        .catch(e => setErrorMessage('Неправильные данные'))
     }
 
     return (
         <Grid className='login'>
             <div className='login_title'>Вход</div>
+            {
+                errorMessage && <span style={{ color: '#ff6666' }}>{errorMessage}</span>
+            }
             <TextField
                 fullWidth
                 placeholder="Введите логин"

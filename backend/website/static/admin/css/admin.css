@@ -1,0 +1,43 @@
+body {
+    font-family: 'Lucida Sans Unicode', 'serif';
+}
+
+#branding {
+    gap: 10px;
+    align-items: center;
+}
+
+#branding h1 a:link, #branding h1 a:visited {
+    color: white;
+    font-weight: 400;
+}
+
+#user-tools {
+    color: white;
+}
+
+div.breadcrumbs {
+    background: #8ED8F8;
+}
+
+.object-tools li {
+    display: flex;
+    align-items: center;
+}
+
+.module caption {
+    background-color: #122D52;
+}
+
+html[data-theme="light"], :root {
+    --primary: #21ADE4;
+    --default-button-bg: #21ADE4;
+    --default-button-hover-bg: #21ADE4;
+    --button-bg: #21ADE4;
+    --button-hover-bg: #0c8bbd;
+    --breadcrumbs-fg: #white;
+    --header-bg: #049dd9;
+    --header-color: #ffffbf;
+    --selected-row: #8ED8F8;
+}
+
