@@ -46,6 +46,7 @@ const LoginPage = () => {
             <Button
                 onClick={loginning}
                 variant="outlined" 
+                color={"primary"}
                 sx={{
                     ...primaryButton,
                     marginTop: '8px',
