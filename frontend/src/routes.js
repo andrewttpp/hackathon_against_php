@@ -7,13 +7,17 @@ import {
     CREATE_TEST_ROUTE,
     HANDBOOK,
     HANDBOOK_BACHELOR,
-    HANDBOOK_MAGISTRACY, HANDBOOK_SPECIALTY
+    HANDBOOK_MAGISTRACY,
+    HANDBOOK_SPECIALTY,
+    INTERACTIVE_ROUTE, MY_TESTS
 } from './utils/const';
 import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
 import CreateTestPage from './components/pages/createTestPage';
 import HandbookPage from "./components/pages/handbookPage";
 import HandbookTypePage from "./components/pages/handbookTypePage";
+import InteractivePage from './components/pages/interactivePage';
+import MyTestsPage from "./components/pages/myTestsPage";
 
 const AppRoutes = () => {
 
@@ -38,6 +42,16 @@ const AppRoutes = () => {
             <Route
                 path={CREATE_TEST_ROUTE}
                 element={<CreateTestPage />}
+            />
+
+            <Route
+                path={MY_TESTS}
+                element={<MyTestsPage/>}
+            />
+
+            <Route
+                path={INTERACTIVE_ROUTE}
+                element={<InteractivePage />}
             />
 
             <Route

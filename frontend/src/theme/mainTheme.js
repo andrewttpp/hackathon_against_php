@@ -29,5 +29,33 @@ export const theme = createTheme({
     "fontFamily": `'Nunito', sans-serif;`
     },
     components: {
+        MuiAlert: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '12px'
+                }
+            }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '12px'
+                }
+            }
+        },
+        MuiToggleButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '12px'
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '12px'
+                }
+            }
+        }
     }
 });

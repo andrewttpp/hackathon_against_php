@@ -32,10 +32,10 @@ const App = () => {
     }
 
     return (
-        <>
+        <div className='page'>
             <Header/>
             <AppRoutes/>
-        </>
+        </div>
     );
 }
 

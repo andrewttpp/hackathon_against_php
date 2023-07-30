@@ -1,0 +1,30 @@
+.testsContainer {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    text-decoration: none;
+    color: #122D52;
+    min-height: 50px;
+    align-items: center;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.testsContainer a {
+    text-decoration: none;
+    color: #122D52;
+    font-size: 20px;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.testsBlockContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.countQuestionsTestsBlockContainer {
+    font-size: 14px;
+    color: #838b97;
+}

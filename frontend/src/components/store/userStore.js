@@ -3,12 +3,14 @@ export default class UserStore {
         this._auth = false
         this._data = {}
         this._name = ''
+        this._data = {}
     }
 
     set (data) {
         this._auth = true
-        this._data = data
-        this._name = data.name + ' ' + data.surname
+        this._data = data.user
+        this._name = data.user.name + ' ' + data.user.surname
+        this._tests = data.tests
     }
 
     get auth() {
@@ -22,5 +24,8 @@ export default class UserStore {
     get name() {
         return this._name
     }
-    
+
+    get tests() {
+        return this._tests
+    }
 }

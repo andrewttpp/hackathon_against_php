@@ -1,21 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {getHandbook} from "../../http/apiHandbook";
 import '../../styles/HandbookType.css'
+import {isEmpty} from "../../utils/helpsFunctions";
 
 
 const HandbookTypePage = () => {
     const [handbook, setHandbook] = useState({})
     const [titleName, setTitleName] = useState({})
-
-    const isEmpty = (obj) => {
-        for (let prop in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-                return false;
-            }
-        }
-
-        return true
-    }
 
     const getTitleName = (typeHandbook) => {
         if (typeHandbook === 'bachelor') {
