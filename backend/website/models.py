@@ -70,7 +70,7 @@ class Specialties(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('code',)
         verbose_name = 'Специальность'
         verbose_name_plural = 'Специальности'
 
@@ -99,9 +99,9 @@ class User(AbstractUser):
     group = models.ForeignKey('Groups', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Группа')
     first_name = None
     last_name = None
-    name = models.CharField(verbose_name='Имя', blank=True, null=True)
-    surname = models.CharField(verbose_name='Фамилия', blank=True, null=True)
-    patronymic = models.CharField(verbose_name='Отчество', blank=True, null=True)
+    name = models.CharField(verbose_name='Имя', max_length=128, blank=True, null=True)
+    surname = models.CharField(verbose_name='Фамилия', max_length=128, blank=True, null=True)
+    patronymic = models.CharField(verbose_name='Отчество', max_length=128, blank=True, null=True)
     card_number = models.IntegerField(null=True, blank=True, verbose_name='Номер зачетки')
 
     USERNAME_FIELD = 'email'
@@ -128,9 +128,15 @@ class User(AbstractUser):
 
 class Tests(models.Model):
     user_create = models.ForeignKey('User', on_delete=models.CASCADE)
-    group = models.ForeignKey('Groups', on_delete=models.CASCADE)
+    test = models.JSONField()
+    slug = models.CharField(max_length=128)
+    time_create = models.DateTimeField(auto_now_add=True)
+    is_private = models.BooleanField(default=False)
 
 
-class Pool(models.Model):
+class Results(models.Model):
+    user_passed = models.ForeignKey('User', on_delete=models.CASCADE)
     test = models.ForeignKey('Tests', on_delete=models.CASCADE)
-    question = models.CharField(verbose_name='Вопрос')
+    results = models.JSONField()
+    score = models.IntegerField()
+    maximum_score = models.IntegerField()
