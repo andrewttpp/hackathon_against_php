@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState }from 'react'
-import {Button, RadioGroup, Grid, FormControlLabel, MenuItem, Radio, Select, TextField, IconButton } from '@mui/material';
+import {Button, RadioGroup, FormControlLabel, MenuItem, Radio, Select, TextField, IconButton, FormGroup, Checkbox, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { primaryTextField } from '../ui/cssStyles';
 import Add from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,7 +14,10 @@ const CreateTestPage = () => {
 
     const [questions, setQuestions] = useState([{
         id: 0,
-        type: 'solo',
+        type: '-',
+        text: '',
+        level: 1,
+        scores: 1,
         answers: [
             {
                 id: 0,
@@ -23,13 +26,13 @@ const CreateTestPage = () => {
             }
         ]
     }])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (!user.auth) {
-            navigate('/login')
-        }
-        setLoading(false)
+        // if (!user.auth) {
+        //     navigate('/login')
+        // }
+        // setLoading(false)
     }, [])
 
     const onChangeType = (questionId, e) => {
@@ -41,6 +44,53 @@ const CreateTestPage = () => {
                     i => i.id == questionId ? {
                         ...i,
                         type: value
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeLevel = (questionId, value) => {
+        console.log(questions)
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        level: value,
+                        scores: value
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeScores = (questionId, e) => {
+        const value = e.target.value
+        if (value > 99) {
+            return;
+        }
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        scores: value
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeTextQuestion = (questionId, e) => {
+        const value = e.target.value
+
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        text: value
                     } : i
                 )
             ]
@@ -108,6 +158,8 @@ const CreateTestPage = () => {
     const addNewQuestion = () => {
         const defaultQuestion = {
             type: '',
+            text: '',
+            level: 1,
             answers: [
                 {
                     id: 0,
@@ -137,7 +189,65 @@ const CreateTestPage = () => {
         })
     }
 
+    const onChangeCorrectRadio = (questionId, e) => {
+        const answerId = e.target.value
 
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        answers: i.answers.map(j => j.id == answerId ? {
+                            ...j,
+                            correct: true
+                        } : {
+                            ...j,
+                            correct: false
+                        })
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeCorrectCheckbox = (questionId, e) => {
+        const answerId = e.target.value
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        answers: i.answers.map(j => j.id == answerId ? {
+                            ...j,
+                            correct: j.correct ? false : true
+                        } : j)
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeCurrentSequence = (questionId, answerId, e) => {
+        const value = e.target.value
+
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        answers: i.answers.map(j => j.id == answerId ? {
+                            ...j,
+                            correct: value
+                        } : {
+                            ...j,
+                            correct: j.correct == value ? null : j.correct
+                        })
+                    } : i
+                )
+            ]
+        })
+    }
+    
     const onChangeQuestions = () => {
 
     }
@@ -159,14 +269,6 @@ const CreateTestPage = () => {
                         minWidth: '350px'
                     }}
                 />
-                {/* <TextField 
-                    label="Название теста"
-                    className='createTest_main_input'
-                    sx={{
-                        ...primaryTextField,
-                        minWidth: '350px'
-                    }}
-                /> */}
             </div>
 
             <div className='createTest_list'>
@@ -181,15 +283,54 @@ const CreateTestPage = () => {
                                     onChange={e => onChangeType(question.id, e)}
                                     sx={{ borderRadius: '12px' }}
                                 >
-                                    <MenuItem value={''}>Не выбрано</MenuItem>
+                                    <MenuItem value={'-'}>Не выбрано</MenuItem>
                                     <MenuItem value={'solo'}>Одиночный выбор</MenuItem>
                                     <MenuItem value={'many'}>Множественный выбор</MenuItem>
-                                    <MenuItem value={'select'}>Установление соответствия</MenuItem>
                                     <MenuItem value={'hronologia'}>Установление последовательности</MenuItem>
+                                    <MenuItem value={'select'}>Установление соответствия</MenuItem>
                                     <MenuItem value={'openWith'}>Открытый ответ (с ограничениями)</MenuItem>
                                     <MenuItem value={'openWithout'}>Открытый ответ (без ограничений)</MenuItem>
                                 </Select>
+
+                                <div style={{ float: 'right'}}> 
+                                    <ToggleButtonGroup 
+                                        variant="outlined" 
+                                        exclusive
+                                        value={question.level || 1} 
+                                        onChange={(e, value) => {
+                                            return onChangeLevel(question.id, value)
+                                        }}
+                                    >
+                                        <ToggleButton value={1} color='success'>Легкий</ToggleButton>
+                                        <ToggleButton value={2} color='warning'>Средний</ToggleButton>
+                                        <ToggleButton value={3} color='error'>Сложный</ToggleButton>
+                                    </ToggleButtonGroup>
+                                    <TextField 
+                                        variant="standard"
+                                        label="Баллы"
+                                        className='createTest_main_input'
+                                        sx={{
+                                            ...primaryTextField,
+                                            maxWidth: '50px',
+                                            margin: '0 8px'
+                                        }}
+                                        value={question.scores || 1}
+                                        onChange={e => onChangeScores(question.id, e)}
+                                    />
+                                </div>
+
                             </div>
+                            <TextField 
+                                label="Текст вопроса"
+                                className='createTest_main_input'
+                                sx={{
+                                    ...primaryTextField,
+                                    width: '100%',
+                                    margin: '10px 0'
+                                }}
+                                value={question.text}
+                                onChange={e => onChangeTextQuestion(question.id, e)}
+                            />
                             <div className='createTest_list_question_main'>
                                 {
                                     question.type == 'solo' &&
@@ -197,6 +338,8 @@ const CreateTestPage = () => {
                                         <div className='question_list'>
                                             <RadioGroup
                                                 className='question_list'
+                                                value={question.answers.filter(i => i.correct == true)[0]?.id || 0}
+                                                onChange={e => onChangeCorrectRadio(question.id, e)}
                                             >
                                                 {
                                                     question.answers.map((answer, index) => 
@@ -206,13 +349,15 @@ const CreateTestPage = () => {
                                                         >
                                                             <FormControlLabel 
                                                                 className='question_list_answer-radio'
+                                                                value={answer.id}
                                                                 control={
                                                                     <Radio 
                                                                     />
                                                                 } 
                                                             />
                                                             <TextField 
-                                                                label="Текст вопроса"
+                                                                label={answer.correct && answer.text ? 'Это правильный ответ' : ''}
+                                                                placeholder="Текст ответа"
                                                                 className='createTest_main_input'
                                                                 sx={{
                                                                     ...primaryTextField,
@@ -240,36 +385,165 @@ const CreateTestPage = () => {
                                 }
                                 {
                                     question.type == 'many' &&
-                                    <div>many</div>
+                                    <div className='question'>
+                                        <div className='question_list'>
+                                            <FormGroup
+                                                className='question_list'
+                                                value={question.answers.filter(i => i.correct == true && i.id)}
+                                                onChange={e => onChangeCorrectCheckbox(question.id, e)}
+                                            >
+                                                {
+                                                    question.answers.map((answer, index) => 
+                                                        <div 
+                                                            className='question_list_answer'
+                                                            key={answer.id}
+                                                        >
+                                                            <FormControlLabel 
+                                                                className='question_list_answer-radio'
+                                                                value={answer.id}
+                                                                control={
+                                                                    <Checkbox 
+                                                                    />
+                                                                } 
+                                                            />
+                                                            <TextField 
+                                                                label={answer.correct && answer.text ? 'Это правильный ответ' : ''}
+                                                                placeholder="Текст ответа"
+                                                                className='createTest_main_input'
+                                                                sx={{
+                                                                    ...primaryTextField,
+                                                                    width: '100%'
+                                                                }}
+                                                                value={answer.text}
+                                                                onChange={e => onChangeText(question.id, answer.id, e)}
+                                                            />
+                                                            <IconButton 
+                                                                color='error'
+                                                                className='question_list_answer-iconButton'
+                                                                onClick={e => deleteAnswer(question.id, answer.id)}
+                                                            >
+                                                                <CloseIcon />
+                                                            </IconButton>
+                                                        </div>
+                                                    )
+                                                }
+
+                                                
+                                            </FormGroup>
+                                        </div>
+        
+                                    </div>
                                 }
                                 {
-                                    question.type == 'select' &&
-                                    <div>select</div>
-                                }
-                                {
-                                    question.type == 'hronologia' &&
-                                    <div>hronologia</div>
+                                    (question.type == 'hronologia' || question.type == 'select') &&
+                                    <div className='question'>
+                                        <div className='question_list'>
+                                            <FormGroup
+                                                className='question_list'
+                                            >
+                                                {
+                                                    question.answers.map((answer, index) => 
+                                                        <div 
+                                                            className='question_list_answer'
+                                                            key={answer.id}
+                                                        >
+                                                            <FormControlLabel 
+                                                                className='question_list_answer-radio'
+                                                                control={
+                                                                    <Select 
+                                                                        value={answer.correct || 0}
+                                                                        onChange={e => onChangeCurrentSequence(question.id, answer.id, e)}
+                                                                    >
+                                                                        <MenuItem value={0}>-</MenuItem>
+                                                                        {
+                                                                            question.answers.map((i, index) => 
+                                                                                <MenuItem value={index + 1} key={index + 1}>{index + 1}</MenuItem>
+                                                                            )
+                                                                        }
+                                                                    </Select>
+                                                                } 
+                                                            />
+                                                            <TextField 
+                                                                label={answer.correct && answer.text ? `№ ${answer.correct}` : ''}
+                                                                placeholder="Текст ответа"
+                                                                className='createTest_main_input'
+                                                                sx={{
+                                                                    ...primaryTextField,
+                                                                    width: '100%'
+                                                                }}
+                                                                value={answer.text}
+                                                                onChange={e => onChangeText(question.id, answer.id, e)}
+                                                            />
+                                                            <IconButton 
+                                                                color='error'
+                                                                className='question_list_answer-iconButton'
+                                                                onClick={e => deleteAnswer(question.id, answer.id)}
+                                                            >
+                                                                <CloseIcon />
+                                                            </IconButton>
+                                                        </div>
+                                                    )
+                                                }
+
+                                                
+                                            </FormGroup>
+                                        </div>
+        
+                                    </div>
                                 }
                                 {
                                     question.type == 'openWith' &&
-                                    <div>openWith</div>
+                                    <div className='question'>
+                                        <div className='question_list'>
+                                            {
+                                                question.answers.map((answer, index) => 
+                                                    <div 
+                                                        className='question_list_answer'
+                                                        key={answer.id}
+                                                    >
+                                                        <TextField 
+                                                            label={answer.text ? 'Текст правильного ответа' : ''}
+                                                            placeholder="Текст ответа"
+                                                            className='createTest_main_input'
+                                                            sx={{
+                                                                ...primaryTextField,
+                                                                width: '100%'
+                                                            }}
+                                                            value={answer.text}
+                                                            onChange={e => onChangeText(question.id, answer.id, e)}
+                                                        />
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
+        
+                                    </div>
                                 }
                                 {
                                     question.type == 'openWithout' &&
-                                    <div>openWithout</div>
+                                    <div className='question'>
+                                    </div>
                                 }
 
-                                <Button 
-                                    color='primary'
-                                    variant="contained"
-                                    onClick={() => addNewAnswer(question.id)}
-                                    sx={{
-                                        margin: '15px 0px 0px 15px'
-                                    }}
-                                >
-                                    <Add sx={{ marginRight: '5px' }}/>
-                                    <span>Добавить ответ</span>
-                                </Button>
+                                {
+                                    (
+                                        (question.type != 'openWithout') &&
+                                        (question.type != 'openWith') && 
+                                        (question.type != '-')
+                                    ) &&
+                                    <Button 
+                                        color='primary'
+                                        variant="contained"
+                                        onClick={() => addNewAnswer(question.id)}
+                                        sx={{
+                                            margin: '15px 0px 0px 15px'
+                                        }}
+                                    >
+                                        <Add sx={{ marginRight: '5px' }}/>
+                                        <span>Добавить ответ</span>
+                                    </Button>
+                                }
+
                                 <Button 
                                     color='error'
                                     variant="contained"
