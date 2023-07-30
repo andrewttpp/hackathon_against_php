@@ -8,13 +8,8 @@ from six import text_type
 from uuid import uuid4
 
 from test_site import settings
-<<<<<<< HEAD
 from website.models import User, Levels, Tests
 from website.serializers import UserSerializer, LevelsSerializer, TestsSerializer
-=======
-from website.models import User, Levels
-from website.serializers import UserSerializer, LevelsSerializer
->>>>>>> a060a96cc36122fcfceed07012d418f335e2dca3
 
 
 class UserLoginView(APIView):
@@ -117,29 +112,4 @@ class TestsView(APIView):
             json_object = {'user_id': test_object.user_create.id, 'questions': test}
             return Response(data=json_object, status=status.HTTP_200_OK)
         else:
-<<<<<<< HEAD
             return Response({"message": "Test not found"}, status=status.HTTP_404_NOT_FOUND)
-=======
-            return Response({"message": "Authorization failed! Token is invalid!"}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-class HandbookBachelor(APIView):
-    def get(self, request):
-        handbook = LevelsSerializer(Levels.objects.filter(name='Бакалавр').first()).data
-
-        return Response(data=handbook, status=status.HTTP_200_OK)
-
-
-class HandbookMagistracy(APIView):
-    def get(self, request):
-        handbook = LevelsSerializer(Levels.objects.filter(name='Магистратура').first()).data
-
-        return Response(data=handbook, status=status.HTTP_200_OK)
-
-
-class HandbookSpecialty(APIView):
-    def get(self, request):
-        handbook = LevelsSerializer(Levels.objects.filter(name='Специалитет').first()).data
-
-        return Response(data=handbook, status=status.HTTP_200_OK)
->>>>>>> a060a96cc36122fcfceed07012d418f335e2dca3
