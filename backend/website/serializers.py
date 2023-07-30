@@ -35,4 +35,4 @@ class LevelsSerializer(serializers.ModelSerializer):
 class TestsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tests
-        fields = ('id', 'slug', )
+        fields = ('id', 'name', 'slug', )

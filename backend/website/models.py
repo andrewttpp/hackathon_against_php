@@ -128,6 +128,7 @@ class User(AbstractUser):
 
 class Tests(models.Model):
     user_create = models.ForeignKey('User', on_delete=models.CASCADE)
+    name = models.CharField(max_length=1024, default='')
     test = models.JSONField()
     slug = models.CharField(max_length=128)
     time_create = models.DateTimeField(auto_now_add=True)

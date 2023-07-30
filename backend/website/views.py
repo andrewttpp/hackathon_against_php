@@ -50,10 +50,10 @@ class MyProfile(APIView):
 
                 test_object = Tests.objects.filter(user_create=user)
 
-                tests = {}
+                tests = []
 
                 for i in test_object:
-                    tests |= TestsSerializer(i).data | {'count_questions': len(i.test)}
+                    tests.append(TestsSerializer(i).data | {'count_questions': len(i.test)})
 
                 return Response(data={'user': UserSerializer(user).data, 'tests': tests}, status=status.HTTP_200_OK)
             else:
@@ -89,6 +89,7 @@ class TestCreate(APIView):
         slug = str(uuid4())
         data = request.data
         user = User.objects.get(id=data['user_id'])
+        name = data['name']
         test = data['questions']
         while True:
             if Tests.objects.filter(slug=slug):
@@ -96,7 +97,7 @@ class TestCreate(APIView):
                 continue
             else:
                 break
-        Tests.objects.create(user_create=user, test=test, slug=slug)
+        Tests.objects.create(user_create=user, name=name, test=test, slug=slug)
 
         return Response({"message": "OK"}, status=status.HTTP_200_OK)
 
@@ -109,7 +110,7 @@ class TestsView(APIView):
             for i, elem_1 in enumerate(test):
                 for k, elem_2 in enumerate(elem_1['answers']):
                     del test[i]['answers'][k]['correct']
-            json_object = {'user_id': test_object.user_create.id, 'questions': test}
+            json_object = {'user_id': test_object.user_create.id, 'name': test_object.name, 'questions': test}
             return Response(data=json_object, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Test not found"}, status=status.HTTP_404_NOT_FOUND)
