@@ -40,3 +40,4 @@ services:
 
 volumes:
   django_static_volume:
+  react_static_volume:
