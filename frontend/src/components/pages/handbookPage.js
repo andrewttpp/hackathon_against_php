@@ -6,7 +6,7 @@ import specialtyLogo from'../../static/specialty.svg';
 
 import styles from '../../styles/Handbook.module.css'
 
-const Handbook = () => {
+const HandbookPage = () => {
 
     return (
         <div className={styles.mainContainer}>
@@ -16,21 +16,21 @@ const Handbook = () => {
             </div>
             <div className={styles.handbookContainer}>
                 <div className={styles.blockBachelorContainer}>
-                    <a href="handbook/bachelor/" className="bachelor">
+                    <a href="handbook/bachelor" className="bachelor">
                         <img id={styles.bachelorLogo} src={bachelorLogo}/>
-                        <span>Бакалавр</span>
+                        <span>Бакалавриат</span>
                     </a>
                 </div>
 
                 <div className={styles.blockMagistracyContainer}>
-                    <a href="handbook/magistracy/" className="magistracy">
+                    <a href="handbook/magistracy" className="magistracy">
                         <img id={styles.magistracyLogo} src={magistracyLogo}/>
                         <span>Магистратура</span>
                     </a>
                 </div>
 
                 <div className={styles.blockSpecialtyContainer}>
-                    <a href="handbook/specialty/" className="specialty">
+                    <a href="handbook/specialty" className="specialty">
                         <img id={styles.specialtyLogo} src={specialtyLogo}/>
                         <span>Специалитет</span>
                     </a>
@@ -41,4 +41,4 @@ const Handbook = () => {
 
 };
 
-export default Handbook;
+export default HandbookPage;

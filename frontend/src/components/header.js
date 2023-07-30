@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Context } from '..';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import Cookies from 'universal-cookie';
+import logo from'../static/logo.svg';
 
 const Header = () => {
 
@@ -18,7 +19,7 @@ const Header = () => {
     return (
         <div className='header'>
             <Link to={'/'} style={{ textDecoration: "none", color: '#000'}}>
-                HAKATON.COM
+                <img src={logo} style={{padding: "10px", width: "150px"}}/>
             </Link>
 
             <div>
