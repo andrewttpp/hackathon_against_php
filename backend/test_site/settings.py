@@ -10,13 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-($ybo7dxa#vyjq@hw%*a%094f-h61hf%&t)sy2ly+$42s$0o28'
 
-DEBUG = True
+DEBUG = 1
 
 ALLOWED_HOSTS = ['*']
 
@@ -49,7 +53,7 @@ ROOT_URLCONF = 'test_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,12 +70,12 @@ WSGI_APPLICATION = 'test_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "test-website",
-        "USER": "postgres",
-        "PASSWORD": "PT?qGNGa~dZBVczE{G|a4MsH?2AobVAN",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": os.getenv("SQL_ENGINE"),
+        "NAME": os.getenv("SQL_DATABASE"),
+        "USER": os.getenv("SQL_USER"),
+        "PASSWORD": os.getenv("SQL_PASSWORD"),
+        "HOST": os.getenv("SQL_HOST"),
+        "PORT": os.getenv("SQL_PORT"),
     }
 }
 
@@ -108,7 +112,7 @@ REST_FRAMEWORK = {
 }
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'test_site/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -126,3 +130,50 @@ CORS_ALLOW_CREDENTIALS = True
 
 AUTH_USER_MODEL = 'website.User'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+
+    "JTI_CLAIM": "jti",
+
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(days=30),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+
+    'AUTH_COOKIE': 'access_token',  # Cookie name. Enables cookies if value is set.
+    'AUTH_COOKIE_DOMAIN': None,  # A string like "example.com", or None for standard domain cookie.
+    'AUTH_COOKIE_SECURE': False,  # Whether the auth cookies should be secure (https:// only).
+    'AUTH_COOKIE_HTTP_ONLY': True,  # Http only cookie flag.It's not fetch by javascript.
+    'AUTH_COOKIE_PATH': '/',  # The path of the auth cookie.
+    'AUTH_COOKIE_SAMESITE': 'Lax',
+}

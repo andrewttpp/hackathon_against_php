@@ -20,8 +20,9 @@ class LevelsAdmin(admin.ModelAdmin):
 
 
 class SpecialtiesAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'code', 'name')
     fields = ('level', 'code', 'name',)
+    ordering = ['code', ]
 
 
 class ProgramsAdmin(admin.ModelAdmin):
