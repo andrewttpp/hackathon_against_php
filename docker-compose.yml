@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  django:
+
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - django_static_volume:/usr/src/app/market/static
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.0-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=PT?qGNGa~dZBVczE{G|a4MsH?2AobVAN
+      - POSTGRES_DB=test-website
+    env_file:
+      - backend/.env
+    ports:
+      - "5432:5432"
+
+  react:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - 3000
+    volumes:
+      - react_static_volume:/usr/src/app/build/static
+    command: serve -s build -l 3000
+    depends_on:
+      - django
+
+volumes:
+  django_static_volume:
