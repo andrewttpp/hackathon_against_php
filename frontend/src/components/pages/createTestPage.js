@@ -1,39 +1,74 @@
 import React, { useContext, useEffect, useState }from 'react'
-import {Button, RadioGroup, FormControlLabel, MenuItem, Radio, Select, TextField, IconButton, FormGroup, Checkbox, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import {Button, RadioGroup, FormControlLabel, MenuItem, Radio, Select, TextField, IconButton, FormGroup, Checkbox, ToggleButtonGroup, ToggleButton, Alert } from '@mui/material';
 import { primaryTextField } from '../ui/cssStyles';
 import Add from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Context } from '../..';
 import { useNavigate } from 'react-router-dom';
+import { create } from '../../http/apiTest';
 
 const CreateTestPage = () => {
 
     const navigate = useNavigate()
     const {user} = useContext(Context)
 
-    const [questions, setQuestions] = useState([{
-        id: 0,
+    const defaultQuestions = [{
+        id: 1,
         type: '-',
         text: '',
         level: 1,
         scores: 1,
         answers: [
             {
-                id: 0,
+                id: 1,
                 text: '',
                 correct: false,
             }
         ]
-    }])
+    }]
+
+    const [name, setName] = useState('')
+    const [questions, setQuestions] = useState(defaultQuestions)
     const [loading, setLoading] = useState(false)
+    const [isSaveTest, setIsSaveTest] = useState(false)
 
     useEffect(() => {
-        // if (!user.auth) {
-        //     navigate('/login')
-        // }
-        // setLoading(false)
+        if (!user.auth) {
+            navigate('/login')
+            return;
+        }
+        setIsSaveTest(localStorage.getItem('lastSaveTest') != null)
+        setLoading(false)
     }, [])
+
+    useEffect(() => {
+        if (questions.length >= 3) {
+            localStorage.setItem(
+                'lastSaveTest',
+                JSON.stringify({name: name, questions: JSON.stringify(questions)})
+            )
+        } else {
+            questions.length != 1 && localStorage.removeItem('lastSaveTest')
+        }
+    }, [questions])
+
+    const loadSaveTest = () => {
+        const lastSave = JSON.parse(localStorage.getItem('lastSaveTest'))
+        setQuestions(JSON.parse(lastSave.questions))
+        setName(lastSave.name)
+        setIsSaveTest(false)
+    }
+
+    const deleteSaveTest = () => {
+        localStorage.removeItem('lastSaveTest')
+        setIsSaveTest(false)
+    }
+
+    const onChangeName = (e) => {
+        const value = e.target.value
+        setName(value)
+    }
 
     const onChangeType = (questionId, e) => {
         const value = e.target.value
@@ -51,7 +86,6 @@ const CreateTestPage = () => {
     }
 
     const onChangeLevel = (questionId, value) => {
-        console.log(questions)
         setQuestions(prevState => {
             return [
                 ...prevState.map(
@@ -248,8 +282,12 @@ const CreateTestPage = () => {
         })
     }
     
-    const onChangeQuestions = () => {
-
+    const createTest = () => {
+        create({
+            user_id: user.data.id,
+            name,
+            questions
+        })
     }
 
     if (loading) {
@@ -260,6 +298,33 @@ const CreateTestPage = () => {
         <div className='createTest'>
            <div>Создание нового теста</div>
 
+            {
+                isSaveTest &&
+                <Alert color="primary" severity="info">
+                    <div>У вас есть несохраненный тест. Хотите продолжить создание?</div>
+                    <Button 
+                        color='primary'
+                        variant="contained"
+                        onClick={loadSaveTest}
+                        sx={{
+                            margin: '10px 0px'
+                        }}
+                    >
+                        Продолжить
+                    </Button>
+                    <Button 
+                        color='error'
+                        variant="outlined"
+                        onClick={deleteSaveTest}
+                        sx={{
+                            margin: '10px 0px 10px 10px'
+                        }}
+                    >
+                        Удалить сохранение
+                    </Button>
+                </Alert>
+            }
+
             <div className='createTest_main'>
                 <TextField 
                     label="Название теста"
@@ -268,6 +333,8 @@ const CreateTestPage = () => {
                         ...primaryTextField,
                         minWidth: '350px'
                     }}
+                    value={name}
+                    onChange={e => onChangeName(e)}
                 />
             </div>
 
@@ -571,6 +638,14 @@ const CreateTestPage = () => {
                 </Button>
             </div>
 
+            <Button 
+                color='success'
+                variant="contained"
+                sx={{ width: '100%', marginTop: '15px' }}
+                onClick={createTest}
+            >
+                Завершить создание теста
+            </Button>
         </div>
     );
 }

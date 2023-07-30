@@ -7,8 +7,8 @@ export default class UserStore {
 
     set (data) {
         this._auth = true
-        this._data = data
-        this._name = data.name + ' ' + data.surname
+        this._data = data.user
+        this._name = data.user.name + ' ' + data.user.surname
     }
 
     get auth() {
