@@ -1,0 +1,131 @@
+.wrapper {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    padding: 50px 100px;
+    color: #122D52;
+}
+
+.handbookContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.titlePage {
+    display: flex;
+    font-size: 25px;
+}
+
+.specialtiesBlockContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.specialtiesBlock, .programsBlock {
+    padding: 20px;
+    border: 1px solid #122D52;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.specialtiesBlock {
+    width: 800px;
+    position: relative;
+}
+
+.programsBlockWrapper {
+    display: none;
+    align-items: end;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+.programsBlock {
+    width: 600px;
+}
+
+.titleProgramsBlock {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.arrow {
+    position: absolute;
+    right: 2%;
+    height: 30px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.leftBar {
+    position: absolute;
+    background-color: transparent;
+    left: 2%;
+    width: 20px;
+    height: 5px;
+    display: block;
+    transform: rotate(35deg);
+    float: right;
+    border-radius: 2px;
+}
+
+.leftBar:after {
+    content: "";
+    background-color: #122D52;
+    width: 20px;
+    height: 5px;
+    display: block;
+    float: right;
+    border-radius: 4px 6px 6px 4px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+}
+
+.rightBar {
+    position: absolute;
+    background-color: transparent;
+    left: calc(2% + 13px);
+    width: 20px;
+    height: 5px;
+    display: block;
+    transform: rotate(-35deg);
+    float: right;
+    border-radius: 2px;
+}
+
+.rightBar:after {
+    content: "";
+    background-color: #122D52;
+    width: 20px;
+    height: 5px;
+    display: block;
+    float: right;
+    border-radius: 4px 6px 6px 4px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+}
+
+.open .leftBar:after {
+    transform-origin: center center;
+    transform: rotate(-70deg);
+}
+
+.open .rightBar:after {
+    transform-origin: center center;
+    transform: rotate(70deg);
+}
+
+

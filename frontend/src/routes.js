@@ -1,10 +1,19 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import {LOGIN_ROUTE, OTHER_ROUTE, MAIN_ROUTE, CREATE_TEST_ROUTE, HANDBOOK} from './utils/const';
+import {
+    LOGIN_ROUTE,
+    OTHER_ROUTE,
+    MAIN_ROUTE,
+    CREATE_TEST_ROUTE,
+    HANDBOOK,
+    HANDBOOK_BACHELOR,
+    HANDBOOK_MAGISTRACY, HANDBOOK_SPECIALTY
+} from './utils/const';
 import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
 import CreateTestPage from './components/pages/createTestPage';
-import Handbook from "./components/pages/handbook";
+import HandbookPage from "./components/pages/handbookPage";
+import HandbookTypePage from "./components/pages/handbookTypePage";
 
 const AppRoutes = () => {
 
@@ -33,7 +42,22 @@ const AppRoutes = () => {
 
             <Route
                 path={HANDBOOK}
-                element={<Handbook/>}
+                element={<HandbookPage/>}
+            />
+
+            <Route
+                path={HANDBOOK_BACHELOR}
+                element={<HandbookTypePage/>}
+            />
+
+            <Route
+                path={HANDBOOK_MAGISTRACY}
+                element={<HandbookTypePage/>}
+            />
+
+            <Route
+                path={HANDBOOK_SPECIALTY}
+                element={<HandbookTypePage/>}
             />
 
         </Routes>

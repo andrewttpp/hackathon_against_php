@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 200px;
     padding: 50px 100px;
+    color: #122D52;
 }
 
 .titleContainer {
@@ -19,7 +20,7 @@
     display: flex;
     justify-content: space-around;
     opacity: 0;
-    animation: title 2.5s forwards;
+    animation: title 1.5s forwards;
 }
 
 .blockBachelorContainer a, .blockMagistracyContainer a, .blockSpecialtyContainer a {
@@ -34,18 +35,37 @@
     color: black;
     border: 3px solid black;
     border-radius: 10px;
+    margin-top: 20px;
+    font-family: monospace;
+    background-size: 200% 200%;
+    background-repeat: no-repeat;
+    transition: .2s;
 }
+
+.blockBachelorContainer a:hover, .blockMagistracyContainer a:hover, .blockSpecialtyContainer a:hover {
+    background-position: 0 100%;
+    color: white;
+}
+
+.blockBachelorContainer a:hover img, .blockMagistracyContainer a:hover img, .blockSpecialtyContainer a:hover img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(276deg) brightness(103%) contrast(101%);
+}
+
+
 
 .blockBachelorContainer a {
     border-color: #31EC56;
+    background-image: linear-gradient(transparent 50%, #31EC56 50%);
 }
 
 .blockMagistracyContainer a {
     border-color: #EF036C;
+    background-image: linear-gradient(transparent 50%, #EF036C 50%);
 }
 
 .blockSpecialtyContainer a {
     border-color: #EE72F8;
+    background-image: linear-gradient(transparent 50%, #EE72F8 50%);
 }
 
 #bachelorLogo, #magistracyLogo, #specialtyLogo {
@@ -53,7 +73,11 @@
 }
 
 @keyframes title {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
