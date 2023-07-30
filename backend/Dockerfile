@@ -26,7 +26,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # копируем всё что осталось.
-COPY ../../../../Downloads/hackathon_against_php-backend .
+COPY . .
 
 RUN chmod +x /usr/src/app/entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

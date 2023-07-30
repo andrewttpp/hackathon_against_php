@@ -18,7 +18,7 @@ services:
     image: postgres:15.0-alpine
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=PT?qGNGa~dZBVczE{G|a4MsH?2AobVAN
+      - POSTGRES_PASSWORD=12345678
       - POSTGRES_DB=test-website
     env_file:
       - backend/.env
@@ -30,11 +30,11 @@ services:
       context: frontend
       dockerfile: Dockerfile
     restart: always
-    expose:
-      - 3000
+    ports:
+      - "3000:3000"
     volumes:
       - react_static_volume:/usr/src/app/build/static
-    command: serve -s build -l 3000
+    command: npm start
     depends_on:
       - django
 

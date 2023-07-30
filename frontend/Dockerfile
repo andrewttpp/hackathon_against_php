@@ -10,4 +10,4 @@ RUN npm install
 
 ADD . .
 
-RUN npm install -g serve
+RUN npm run build
