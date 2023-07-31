@@ -143,7 +143,7 @@ const CreateTestPage = () => {
                         answers: i.answers.map(j => j.id == answerId ?
                             {
                                 ...j,
-                                text: value
+                                current: value
                             } : j
                         )
                     } : i
@@ -579,7 +579,7 @@ const CreateTestPage = () => {
                                                                 ...primaryTextField,
                                                                 width: '100%'
                                                             }}
-                                                            value={answer.text}
+                                                            value={answer.current}
                                                             onChange={e => onChangeText(question.id, answer.id, e)}
                                                         />
                                                     </div>
@@ -606,7 +606,7 @@ const CreateTestPage = () => {
                                         variant="contained"
                                         onClick={() => addNewAnswer(question.id)}
                                         sx={{
-                                            margin: '15px 0px 0px 15px'
+                                            marginTop: '15px'
                                         }}
                                     >
                                         <Add sx={{ marginRight: '5px' }}/>

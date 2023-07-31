@@ -12,7 +12,6 @@ import { get } from '../../http/apiTest';
 const InteractivePage = () => {
 
     const {user} = useContext(Context)
-    // const [answers, setAnswers] = useState([])
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
