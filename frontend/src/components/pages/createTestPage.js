@@ -143,6 +143,26 @@ const CreateTestPage = () => {
                         answers: i.answers.map(j => j.id == answerId ?
                             {
                                 ...j,
+                                text: value
+                            } : j
+                        )
+                    } : i
+                )
+            ]
+        })
+    }
+
+    const onChangeOpenWithAnswer = (questionId, answerId, e) => {
+        const value = e.target.value
+
+        setQuestions(prevState => {
+            return [
+                ...prevState.map(
+                    i => i.id == questionId ? {
+                        ...i,
+                        answers: i.answers.map(j => j.id == answerId ?
+                            {
+                                ...j,
                                 current: value
                             } : j
                         )
@@ -580,7 +600,7 @@ const CreateTestPage = () => {
                                                                 width: '100%'
                                                             }}
                                                             value={answer.current}
-                                                            onChange={e => onChangeText(question.id, answer.id, e)}
+                                                            onChange={e => onChangeOpenWithAnswer(question.id, answer.id, e)}
                                                         />
                                                     </div>
                                                 )

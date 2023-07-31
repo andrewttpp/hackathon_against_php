@@ -9,7 +9,7 @@ const MyTestsPage = () => {
 
     if (!isEmpty(user.tests)) {
         return (
-            <div className="wrapper">
+            <div className="wrapper" style={{ gap: '10px' }}>
                 <div className="titlePage">
                     <span>Мои тесты</span>
                 </div>
