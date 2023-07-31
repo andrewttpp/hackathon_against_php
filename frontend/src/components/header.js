@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Button, Avatar} from '@mui/material';
+import { Button, Avatar, Grid} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Context } from '..';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
@@ -18,10 +18,18 @@ const Header = () => {
 
     return (
         <div className='header'>
-            <Link to={'/'} style={{ textDecoration: "none", color: '#000'}}>
-                <img src={logo} style={{padding: "10px", width: "150px"}}/>
-            </Link>
-
+            <Grid sx={{display: 'flex', alignItems: 'center'}}>
+                <Link to={'/'} style={{ textDecoration: "none", color: '#000'}}>
+                    <img src={logo} style={{padding: "10px", width: "150px"}}/>
+                
+                </Link>
+                <Link 
+                    to={'/handbook'} 
+                    style={{ textDecoration: "none", color: '#000', marginLeft: '10px', fontSize: '18px'}}
+                >
+                    Справочник
+                </Link>
+            </Grid>
             <div>
                 {
                     user.auth 

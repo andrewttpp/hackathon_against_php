@@ -137,7 +137,7 @@ const InteractivePage = () => {
                                         №{index + 1} Задание с <span style={{ fontWeight: 700}}>одним правильный ответом</span>
                                     </div>
                                     <div className='interactive_question_text'>
-                                        В каком году родился Александр Пушкин?
+                                        {question.text}
                                     </div>
                                     <div className='interactive_question_scores'>
                                         {
@@ -181,7 +181,7 @@ const InteractivePage = () => {
                                         №{index + 1} Задание с <span style={{ fontWeight: 700}}>несколькими правильными ответами</span>
                                     </div>
                                     <div className='interactive_question_text'>
-                                        В каком году родился Александр Пушкин?
+                                        {question.text}
                                     </div>
                                     <div className='interactive_question_scores'>
                                         {
@@ -225,7 +225,7 @@ const InteractivePage = () => {
                                         №{index + 1} Задание с <span style={{ fontWeight: 700}}>правильной последовательностью</span>
                                     </div>
                                     <div className='interactive_question_text'>
-                                        В каком году родился Александр Пушкин?
+                                        {question.text}
                                     </div>
                                     <div className='interactive_question_scores'>
                                         {
@@ -272,7 +272,7 @@ const InteractivePage = () => {
                                         №{index + 1} Задание с <span style={{ fontWeight: 700}}>ограниченным ответом</span>
                                     </div>
                                     <div className='interactive_question_text'>
-                                        В каком году родился Александр Пушкин?
+                                        {question.text}
                                     </div>
                                     <div className='interactive_question_scores'>
                                         {
@@ -304,7 +304,7 @@ const InteractivePage = () => {
                                     №{index + 1} Задание с <span style={{ fontWeight: 700}}>развернутым ответом</span>
                                 </div>
                                 <div className='interactive_question_text'>
-                                    В каком году родился Александр Пушкин?
+                                    {question.text}
                                 </div>
                                 <div className='interactive_question_scores'>
                                     {

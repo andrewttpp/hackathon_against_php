@@ -289,7 +289,7 @@ const CreateTestPage = () => {
             name,
             questions
         })
-
+        localStorage.removeItem('lastSaveTest')
         navigate('/')
         successTestCreate()
     }
