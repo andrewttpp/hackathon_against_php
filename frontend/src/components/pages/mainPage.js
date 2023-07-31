@@ -34,7 +34,7 @@ const MainPage = () => {
                             </Link>
                         </div>
                         <div className='mainPage_lk_item'>
-                            <Link to={'/myTests'}>
+                            <a href='/myTests'>
                                 <Button
                                     startIcon={<ListAltIcon/>}
                                     className='mainPage_lk_item_button'
@@ -42,7 +42,7 @@ const MainPage = () => {
                                 >
                                     Список моих тестов
                                 </Button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                     :
