@@ -134,6 +134,11 @@ class Tests(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Тест'
+        verbose_name_plural = 'Тесты'
+
 
 class Results(models.Model):
     user_passed = models.ForeignKey('User', on_delete=models.CASCADE)

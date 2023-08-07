@@ -6,7 +6,7 @@ from website.models import User, Groups, Levels, Specialties, Programs
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'surname')
-    fields = ('email', 'group', 'name', 'surname', 'patronymic', 'card_number')
+    fields = ('email', 'group', 'name', 'surname', 'patronymic', 'card_number', 'password')
 
 
 class GroupsAdmin(admin.ModelAdmin):
@@ -28,6 +28,11 @@ class SpecialtiesAdmin(admin.ModelAdmin):
 class ProgramsAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     fields = ('code', 'name')
+
+
+class TestsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    fields = ('name', 'tests', 'time_create')
 
 
 # Register your models here.
